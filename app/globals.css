@@ -1,0 +1,256 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* cream background · cobalt blue primary · yellow-lime accent */
+  --background: oklch(0.96 0.015 88);
+  --foreground: oklch(0.14 0.025 55);
+  --card: oklch(0.98 0.010 88);
+  --card-foreground: oklch(0.14 0.025 55);
+  --popover: oklch(0.98 0.010 88);
+  --popover-foreground: oklch(0.14 0.025 55);
+  --primary: oklch(0.44 0.22 265);
+  --primary-foreground: oklch(0.97 0.005 88);
+  --secondary: oklch(0.93 0.20 112);
+  --secondary-foreground: oklch(0.14 0.025 55);
+  --muted: oklch(0.90 0.012 88);
+  --muted-foreground: oklch(0.50 0.015 55);
+  --accent: oklch(0.93 0.20 112);
+  --accent-foreground: oklch(0.14 0.025 55);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 88);
+  --border: oklch(0.78 0.025 88);
+  --input: oklch(0.92 0.010 88);
+  --ring: oklch(0.44 0.22 265);
+  --chart-1: oklch(0.44 0.22 265);
+  --chart-2: oklch(0.93 0.20 112);
+  --chart-3: oklch(0.65 0.12 55);
+  --chart-4: oklch(0.55 0.18 265);
+  --chart-5: oklch(0.75 0.08 88);
+  --radius: 0rem;
+  --sidebar: oklch(0.96 0.015 88);
+  --sidebar-foreground: oklch(0.14 0.025 55);
+  --sidebar-primary: oklch(0.44 0.22 265);
+  --sidebar-primary-foreground: oklch(0.97 0.005 88);
+  --sidebar-accent: oklch(0.93 0.20 112);
+  --sidebar-accent-foreground: oklch(0.14 0.025 55);
+  --sidebar-border: oklch(0.78 0.025 88);
+  --sidebar-ring: oklch(0.44 0.22 265);
+}
+
+.dark {
+  --background: oklch(0.13 0.015 265);
+  --foreground: oklch(0.95 0.010 88);
+  --card: oklch(0.17 0.018 265);
+  --card-foreground: oklch(0.95 0.010 88);
+  --popover: oklch(0.17 0.018 265);
+  --popover-foreground: oklch(0.95 0.010 88);
+  --primary: oklch(0.65 0.22 265);
+  --primary-foreground: oklch(0.13 0.015 265);
+  --secondary: oklch(0.85 0.18 112);
+  --secondary-foreground: oklch(0.13 0.015 265);
+  --muted: oklch(0.22 0.015 265);
+  --muted-foreground: oklch(0.65 0.010 88);
+  --accent: oklch(0.85 0.18 112);
+  --accent-foreground: oklch(0.13 0.015 265);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.28 0.020 265);
+  --input: oklch(0.22 0.015 265);
+  --ring: oklch(0.65 0.22 265);
+  --chart-1: oklch(0.65 0.22 265);
+  --chart-2: oklch(0.85 0.18 112);
+  --chart-3: oklch(0.70 0.08 88);
+  --chart-4: oklch(0.55 0.15 265);
+  --chart-5: oklch(0.60 0.10 200);
+  --sidebar: oklch(0.15 0.015 265);
+  --sidebar-foreground: oklch(0.95 0.010 88);
+  --sidebar-primary: oklch(0.65 0.22 265);
+  --sidebar-primary-foreground: oklch(0.13 0.015 265);
+  --sidebar-accent: oklch(0.85 0.18 112);
+  --sidebar-accent-foreground: oklch(0.13 0.015 265);
+  --sidebar-border: oklch(0.28 0.020 265);
+  --sidebar-ring: oklch(0.65 0.22 265);
+}
+
+@theme inline {
+  --font-display: 'Heebo', sans-serif;
+  --font-sans: 'Assistant', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@keyframes blob-pulse {
+  0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.22; }
+  33%       { transform: scale(1.12) translate(3%, -4%); opacity: 0.28; }
+  66%       { transform: scale(0.95) translate(-3%, 3%); opacity: 0.18; }
+}
+
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.blob-animate {
+  animation: blob-pulse 7s ease-in-out infinite;
+}
+
+.float-animate {
+  animation: float-up 4s ease-in-out infinite;
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Leaflet: Tailwind preflight sets display:block and max-width:100% on img.
+      Leaflet's own CSS handles max-width with !important, but display:block can
+      affect pane layouts. Keep this minimal — don't override height. ── */
+.leaflet-container {
+  font-family: var(--font-sans), sans-serif;
+}
+
+/* Strip Leaflet's default tooltip chrome so our custom styles show */
+.leaflet-tooltip {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.leaflet-tooltip::before {
+  display: none !important;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Range input styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 0;
+  background: var(--muted);
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 0;
+  background: oklch(0.44 0.22 265);
+  cursor: pointer;
+  border: 2px solid oklch(0.44 0.22 265);
+  box-shadow: 0 0 0 3px oklch(0.96 0.015 88);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px oklch(0.44 0.22 265 / 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 0;
+  background: oklch(0.44 0.22 265);
+  cursor: pointer;
+  border: 2px solid oklch(0.44 0.22 265);
+}
+
+/* Smooth page transitions */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.015) 2px, rgba(0,0,0,.015) 4px),
+      repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.015) 2px, rgba(0,0,0,.015) 4px);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+  }
+
+  /* Smooth focus transitions everywhere */
+  a, button, input, [role="button"] {
+    transition-property: color, background-color, border-color, opacity, transform;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}

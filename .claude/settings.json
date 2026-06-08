@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"http://localhost:3002/_next/static/chunks/Documents_GitHub_bread%20website_2a15c653._.js\")",
+      "Bash(curl -s \"http://localhost:3002/_next/static/chunks/leaflet_dist_leaflet-src_812ede39._.js\")",
+      "Bash(curl -s \"http://localhost:3002/_next/static/chunks/1b8bc_leaflet_dist_leaflet-src_812ede39.js\")",
+      "Bash(curl -s \"http://localhost:3002/_next/static/chunks/1b8bc_leaflet_dist_leaflet-src_1e47a51e.js\")",
+      "Bash(curl -s \"http://localhost:3002/_next/static/chunks/1b8bc_leaflet_dist_leaflet-src_1a4105c7.js\")",
+      "Bash(curl -s \"http://localhost:3002/bakeries\")",
+      "Bash(curl -s \"http://localhost:3002/leaflet.js\")",
+      "Bash(node -e ' *)",
+      "WebFetch(domain:www.tab4u.com)",
+      "WebFetch(domain:www.zemereshet.co.il)",
+      "WebFetch(domain:www.fxp.co.il)",
+      "WebFetch(domain:smiled.co.il)",
+      "Bash(gh auth *)",
+      "Bash(cat .gitignore)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
