@@ -168,14 +168,14 @@ import type { Metadata } from 'next'
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   if (slug === "local-flour-guide" || slug === "local-1") {
-    return { title: "מדריך הקמחים ללחם | Rise & Crumb", description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח" }
+    return { title: "מדריך הקמחים ללחם | מגזין | Rise & Crumb", description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח" }
   }
   if (slug === "local-sourdough-science") {
-    return { title: "המדע מאחורי המחמצת | Rise & Crumb", description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב" }
+    return { title: "המדע מאחורי המחמצת | מגזין | Rise & Crumb", description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב" }
   }
   const article = await client.fetch(`*[_type == "article" && (slug.current == $slug || _id == $slug)][0]{title, excerpt}`, { slug });
   if (!article) return { title: "כתבה לא נמצאה" }
-  return { title: `${article.title} | מגזין פיצה`, description: article.excerpt }
+  return { title: `${article.title} | מגזין | Rise & Crumb`, description: article.excerpt }
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
