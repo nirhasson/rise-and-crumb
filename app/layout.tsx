@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: 'Rise & Crumb - מגזין האפייה של ישראל - מתכוני לחם, מחמצת ואפייה',
   description: "מתכונים ללחמי מחמצת, באגטים, פוקצ'ות וחלות. מדריך מחמצת מלא, מחשבון כמויות ומגזין אפייה.",
   generator: 'v0.app',
+  verification: {
+    google: 'hnm6OnVLzbNEJPn4JBgJAWlTrSlcgRaQzZlmCFEVYoA',
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
