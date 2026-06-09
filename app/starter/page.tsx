@@ -114,7 +114,7 @@ export default function StarterGuidePage() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY)
       if (stored) setChecked(JSON.parse(stored))
-    } catch {}
+    } catch { }
     setHydrated(true)
   }, [])
 
@@ -122,7 +122,7 @@ export default function StarterGuidePage() {
     setChecked(prev => {
       const next = [...prev]
       next[index] = !next[index]
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch {}
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch { }
       return next
     })
   }
@@ -130,7 +130,7 @@ export default function StarterGuidePage() {
   const resetProgress = () => {
     const fresh = new Array(CREATION_DAYS.length).fill(false)
     setChecked(fresh)
-    try { localStorage.removeItem(STORAGE_KEY) } catch {}
+    try { localStorage.removeItem(STORAGE_KEY) } catch { }
   }
 
   const completedCount = checked.filter(Boolean).length
@@ -170,11 +170,58 @@ export default function StarterGuidePage() {
                   מה זה מחמצת?
                 </h2>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  מחמצת (Sourdough Starter) היא תרבית חיה של שמרי בר וחיידקי חומצת חלב שמתפתחת
-                  מקמח ומים בלבד. בניגוד לשמרים מסחריים, המחמצת מייצרת לחם עם טעם מורכב וחמצמץ,
-                  קרום מרשים, ופנים אוורירי. ברגע שיש לכם מחמצת פעילה, היא תחיה איתכם לנצח –
+                  מחמצת (Sourdough Starter) היא מערכת אקולוגית חיה של שמרי בר וחיידקי חומצת חלב שמתפתחת
+                  מקמח ומים בלבד. בניגוד לשמרים מסחריים שמספקים תוצאה מהירה ואחידה, המחמצת מייצרת לחם עם טעם מורכב וחמצמץ,
+                  קרום מרשים, פנים אוורירי ויתרונות בריאותיים שפשוט לא קיימים בלחם תעשייתי רגיל. ברגע שיש לכם מחמצת פעילה, היא תחיה איתכם לנצח –
                   בתנאי שתאכילו אותה.
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Science Section ─── */}
+          <div className="border-2 border-border p-6 space-y-4">
+            <h2
+              className="text-2xl font-black text-foreground"
+              style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
+            >
+              המדע שמאחורי המחמצת: למה זה עובד?
+            </h2>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              הסוד של המחמצת טמון בסימביוזה בין שני מיקרואורגניזמים עיקריים:
+            </p>
+
+            <div className="space-y-3">
+              <div className="border-r-4 border-primary pr-4">
+                <p className="text-sm font-bold text-foreground mb-1">שמרי בר (Wild Yeasts)</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  בניגוד לשמרים הקנויים, שמרי הבר במחמצת עמידים יותר לסביבה חומצית. הם ניזונים מהסוכרים בקמח ומייצרים פחמן דו-חמצני (הבועות שמתפיחות את הלחם) ואתנול (אלכוהול התורם לארומה).
+                </p>
+              </div>
+
+              <div className="border-r-4 border-secondary pr-4">
+                <p className="text-sm font-bold text-foreground mb-1">חיידקי חומצת חלב (LAB)</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  אלו הם הגיבורים השקטים שאחראים על הטעם. הם מייצרים חומצה לקטית וחומצה אצטית, שמורידות את רמת ה-pH של המחמצת לסביבות 3.5–5.0. חומציות זו לא רק מעניקה את הטעם ה"חמצמץ", אלא גם מגינה על המחמצת מפני עובש וחיידקים מזיקים שיכולים לשגשג בסביבה ניטרלית.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-primary/5 border border-primary/20 p-4">
+              <p className="text-sm text-foreground leading-relaxed">
+                <span className="font-bold">היתרון הבריאותי: </span>
+                במהלך התסיסה הארוכה, אנזימים במחמצת מפרקים את הגלוטן והפיטאטים (חומרים המעכבים ספיגת מינרלים), מה שהופך את הלחם לקל יותר לעיכול וזמין יותר תזונתית.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-3 pt-1">
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <span className="text-primary shrink-0 mt-0.5">⚖</span>
+                <p><span className="font-semibold text-foreground">לפני שמתחילים</span> — השתמשו במשקל דיגיטלי בלבד. מדידה לפי נפח (כוסות) אינה מדויקת מספיק לאפייה מקצועית.</p>
+              </div>
+              <div className="flex items-start gap-2 text-sm text-muted-foreground">
+                <span className="text-primary shrink-0 mt-0.5">💧</span>
+                <p><span className="font-semibold text-foreground">טיפ למים</span> — כלור במים עלול לעכב תסיסה. מומלץ להשתמש במים מסוננים, או להשאיר מי ברז בכלי פתוח למשך הלילה כדי שהכלור יתנדף.</p>
               </div>
             </div>
           </div>
