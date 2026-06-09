@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/', // דפים שאתה לא רוצה שיסרקו
     },
-    sitemap: 'https://www.sliceafterslice.co.il/sitemap.xml',
+    sitemap: 'https://www.riseandcrumb.com/sitemap.xml',
   }
 }
