@@ -20,7 +20,9 @@
       "Bash(git commit -m ' *)",
       "Bash(vercel whoami *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(find \"/Users/nirhasson/Documents/GitHub\" -name \"*.ts\" -path \"*/sliceafterslice*\" -o -name \"*.tsx\" -path \"*/sliceafterslice*\" 2>/dev/null | head -30)",
+      "Read(//Users/nirhasson/Documents/GitHub/**)"
     ]
   }
 }

@@ -3,10 +3,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Clock, Droplets } from "lucide-react"
-import { type BreadType, type BreadRecipeConfig } from "@/lib/bread-types"
+import { type BreadRecipeConfig } from "@/lib/bread-types"
 
 interface BreadCardProps {
-  type: BreadType
+  type: string
   config: BreadRecipeConfig
   index: number
   isFeatured?: boolean

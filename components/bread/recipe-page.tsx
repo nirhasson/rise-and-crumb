@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { client, recipeBySlugQuery, type SanityRecipe } from "@/lib/sanity"
 import {
   ArrowRight,
   Wheat,
@@ -38,11 +39,34 @@ interface RecipePageProps {
 }
 
 export function RecipePage({ slug }: RecipePageProps) {
+  const [sanityRecipe, setSanityRecipe] = useState<SanityRecipe | null>(null)
+  const [loading, setLoading] = useState(false)
+
   const type = (Object.keys(BREAD_RECIPES) as BreadType[]).find(
     (k) => BREAD_RECIPES[k].slug === slug
   )
 
-  if (!type) {
+  useEffect(() => {
+    if (!type) {
+      setLoading(true)
+      client.fetch(recipeBySlugQuery, { slug })
+        .then((r: SanityRecipe | null) => setSanityRecipe(r ?? null))
+        .catch(() => setSanityRecipe(null))
+        .finally(() => setLoading(false))
+    }
+  }, [slug, type])
+
+  if (type) return <RecipeView type={type} />
+
+  if (loading) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest">טוען מתכון...</p>
+      </div>
+    )
+  }
+
+  if (!sanityRecipe) {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">מתכון לא נמצא</p>
@@ -53,7 +77,168 @@ export function RecipePage({ slug }: RecipePageProps) {
     )
   }
 
-  return <RecipeView type={type} />
+  return <SanityRecipeView recipe={sanityRecipe} />
+}
+
+/* ─── Simple recipe view for Sanity recipes ─── */
+function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="border-2 border-border overflow-hidden">
+        {recipe.image && (
+          <div className="relative w-full h-64">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={recipe.image} alt={recipe.name} className="w-full h-full object-cover" />
+          </div>
+        )}
+        <div className="p-6">
+          <h2
+            className="text-4xl font-black text-foreground mb-3"
+            style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
+          >
+            {recipe.name.toUpperCase()}
+          </h2>
+          {recipe.description && (
+            <p className="text-sm text-muted-foreground leading-relaxed">{recipe.description}</p>
+          )}
+          <div className="flex flex-wrap gap-3 mt-4">
+            {recipe.difficulty && (
+              <span className="border border-border px-3 py-1 text-xs font-bold uppercase tracking-wide">
+                {recipe.difficulty}
+              </span>
+            )}
+            {recipe.totalTime && (
+              <span className="border border-border px-3 py-1 text-xs font-mono">
+                ⏱ {recipe.totalTime}
+              </span>
+            )}
+            {recipe.hydration && (
+              <span className="border border-border px-3 py-1 text-xs font-mono">
+                💧 {recipe.hydrationDisplay ?? `${recipe.hydration}%`}
+              </span>
+            )}
+            {recipe.levainType && (
+              <span className="border border-border px-3 py-1 text-xs font-mono">
+                {recipe.levainType === "sourdough" ? "🌾 מחמצת" : "🧫 שמרים"}
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Flour mix */}
+      {recipe.flourMix && recipe.flourMix.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>
+              תערובת קמחים
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {recipe.flourMix.map((f, i) => (
+                <div key={i} className="flex justify-between items-center text-sm">
+                  <span>{f.name}</span>
+                  <span className="font-mono font-bold">{f.percentage}%</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Fermentation */}
+      {recipe.fermentation && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>
+              תסיסה
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            {recipe.fermentation.bulk && <p><span className="font-semibold">Bulk: </span>{recipe.fermentation.bulk}</p>}
+            {recipe.fermentation.proof && <p><span className="font-semibold">התפחה: </span>{recipe.fermentation.proof}</p>}
+            {recipe.fermentation.tips?.map((tip, i) => (
+              <p key={i} className="text-muted-foreground flex gap-2"><span className="text-primary shrink-0">→</span>{tip}</p>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Shaping */}
+      {recipe.shaping?.technique && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>עיצוב</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <p>{recipe.shaping.technique}</p>
+            {recipe.shaping.tips?.map((tip, i) => (
+              <p key={i} className="text-muted-foreground flex gap-2"><span className="text-primary shrink-0">→</span>{tip}</p>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Baking */}
+      {recipe.baking && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>אפייה</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            {recipe.baking.temperature && <p><span className="font-semibold">טמפרטורה: </span>{recipe.baking.temperature}</p>}
+            {recipe.baking.ovenType && <p><span className="font-semibold">תנור: </span>{recipe.baking.ovenType}</p>}
+            {recipe.baking.bakingTime && <p><span className="font-semibold">זמן: </span>{recipe.baking.bakingTime}</p>}
+            {recipe.baking.steamTip && <p className="text-muted-foreground">{recipe.baking.steamTip}</p>}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Tips */}
+      {recipe.tips && recipe.tips.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>טיפים</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {recipe.tips.map((tip, i) => (
+                <li key={i} className="text-sm flex gap-2 text-muted-foreground">
+                  <span className="text-primary shrink-0">→</span>{tip}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* YouTube */}
+      {recipe.youtubeLinks && recipe.youtubeLinks.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>סרטונים</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {recipe.youtubeLinks.map((v, i) => (
+              <a key={i} href={v.url} target="_blank" rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 border-2 border-border hover:border-primary transition-colors text-sm">
+                <span className="font-medium">{v.title}</span>
+                <span className="text-xs text-muted-foreground">{v.channel}</span>
+              </a>
+            ))}
+          </CardContent>
+        </Card>
+      )}
+
+      <div className="pt-4">
+        <Button asChild variant="outline">
+          <Link href="/">← חזרה למתכונים</Link>
+        </Button>
+      </div>
+    </div>
+  )
 }
 
 /* ─── Animated number that counts up when value changes ─── */

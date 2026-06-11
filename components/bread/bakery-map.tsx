@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { BAKERIES, REGION_LABELS, REGION_VIEW, type Bakery, type Region } from "@/lib/bakery-data"
+import { REGION_LABELS, REGION_VIEW, type Bakery, type Region } from "@/lib/bakery-data"
 import { Clock, MapPin, Instagram, ExternalLink, X, Tag } from "lucide-react"
 
 /* ─── Bakery detail panel ─── */
@@ -109,10 +109,11 @@ function loadLeaflet(): Promise<any> {
 
 /* ─── Map ─── */
 interface BakeryMapProps {
+  bakeries: Bakery[]
   regionFilter: Region | "all"
 }
 
-export function BakeryMap({ regionFilter }: BakeryMapProps) {
+export function BakeryMap({ bakeries, regionFilter }: BakeryMapProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<any>(null)
   const markersRef = useRef<any[]>([])
@@ -152,7 +153,7 @@ export function BakeryMap({ regionFilter }: BakeryMapProps) {
 
         setTimeout(() => { if (!cancelled) { map.invalidateSize(); setStatus("ready") } }, 100)
 
-        buildMarkers(L, map)
+        buildMarkers(L, map, bakeries)
       })
       .catch((e: any) => {
         if (!cancelled) { setErrorMsg(e?.message ?? "error"); setStatus("error") }
@@ -178,7 +179,7 @@ export function BakeryMap({ regionFilter }: BakeryMapProps) {
     const [lat, lng, zoom] = REGION_VIEW[regionFilter]
     mapRef.current.flyTo([lat, lng], zoom, { duration: 0.8 })
 
-    buildMarkers(L, mapRef.current)
+    buildMarkers(L, mapRef.current, bakeries)
   }, [regionFilter, selected])
 
   /* ── Deselect if filtered out ── */
@@ -186,13 +187,13 @@ export function BakeryMap({ regionFilter }: BakeryMapProps) {
     if (selected && regionFilter !== "all" && selected.region !== regionFilter) setSelected(null)
   }, [regionFilter, selected])
 
-  function buildMarkers(L: any, map: any) {
+  function buildMarkers(L: any, map: any, allBakeries: Bakery[]) {
     markersRef.current.forEach(m => { try { m.remove() } catch {} })
     markersRef.current = []
 
     const list = regionRef.current === "all"
-      ? BAKERIES
-      : BAKERIES.filter(b => b.region === regionRef.current)
+      ? allBakeries
+      : allBakeries.filter(b => b.region === regionRef.current)
 
     list.forEach(bakery => {
       const isActive = selectedRef.current?.id === bakery.id

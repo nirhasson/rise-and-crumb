@@ -117,14 +117,14 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     ],
     youtubeLinks: [
       {
-        title: "לחם מחמצת למתחילים",
-        url: "https://www.youtube.com/watch?v=vjINRSzTQpQ",
-        channel: "Joshua Weissman",
+        title: "Sourdough Loaf OPEN CRUMB on a Stand Mixer",
+        url: "https://www.youtube.com/watch?v=rg8l4giQL0U",
+        channel: "Simpel Sourdough",
       },
       {
-        title: "Open Crumb Sourdough",
-        url: "https://www.youtube.com/watch?v=HlJEjW-QSnQ",
-        channel: "Proof Bread",
+        title: "How to Master the Perfect Sourdough Crumb",
+        url: "https://www.youtube.com/watch?v=o-TKsZKOBv0",
+        channel: "Culinary Exploration",
       },
     ],
   },
@@ -177,13 +177,13 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     youtubeLinks: [
       {
         title: "Perfect French Baguette at Home",
-        url: "https://www.youtube.com/watch?v=oxHbQjX1Q9I",
-        channel: "Brian Lagerstrom",
+        url: "https://www.youtube.com/watch?v=efqe9Umxopc",
+        channel: " Ethan Chlebowski",
       },
       {
-        title: "Traditional Baguette Recipe",
-        url: "https://www.youtube.com/watch?v=nMYKHJRUQ_g",
-        channel: "Binging with Babish",
+        title: "Make Beautiful Baguettes With Claire Saffitz",
+        url: "https://www.youtube.com/watch?v=bxXZVNc4SVw",
+        channel: "NYT Cooking",
       },
     ],
   },
@@ -234,14 +234,14 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     ],
     youtubeLinks: [
       {
-        title: "Sourdough Focaccia Recipe",
-        url: "https://www.youtube.com/watch?v=fBMvMTpxTAs",
+        title: "Patrick Ryan's Focaccia Romana",
+        url: "https://www.youtube.com/watch?v=n_o66ba_mVIs",
         channel: "Patrick Ryan",
       },
       {
-        title: "Perfect Focaccia Every Time",
-        url: "https://www.youtube.com/watch?v=yM2gR5pLiAo",
-        channel: "Brian Lagerstrom",
+        title: "Amazing and Simple Sourdough Focaccia",
+        url: "https://www.youtube.com/watch?v=koEppmNnT0A",
+        channel: "Alexandra's Kitchen",
       },
     ],
   },
@@ -293,14 +293,14 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     ],
     youtubeLinks: [
       {
-        title: "How to make Ciabatta at Home",
-        url: "https://www.youtube.com/watch?v=oFgCnFOMOfE",
-        channel: "Ethan Chlebowski",
+        title: "Homemade Ciabatta Bread Recipe",
+        url: "https://www.youtube.com/watch?v=b0hSzzFeT1c",
+        channel: "Preppy Kitchen",
       },
       {
-        title: "Sourdough Ciabatta",
-        url: "https://www.youtube.com/watch?v=gIQJoNpGjDs",
-        channel: "Foodgeek",
+        title: "Sourdough Ciabatta TEST from Start to Finish",
+        url: "https://www.youtube.com/watch?v=EJQAGJPbOT4",
+        channel: "Proof Bread",
       },
     ],
   },
@@ -357,13 +357,13 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     ],
     youtubeLinks: [
       {
-        title: "Dark Rye Sourdough",
-        url: "https://www.youtube.com/watch?v=V2B_ghzQ8AQ",
-        channel: "Foodgeek",
+        title: "How to Make 100% Rye Sourdough Bread Recipe",
+        url: "https://www.youtube.com/watch?v=yb31-XQh_j4",
+        channel: "Matthew James Duffy",
       },
       {
-        title: "Beginner Rye Bread",
-        url: "https://www.youtube.com/watch?v=7_3gSHJBtQk",
+        title: "Dark Sourdough Rye Bread",
+        url: "https://www.youtube.com/watch?v=nsyjVa5SSQI",
         channel: "The Bread Code",
       },
     ],
@@ -419,14 +419,14 @@ export const BREAD_RECIPES: Record<BreadType, BreadRecipeConfig> = {
     ],
     youtubeLinks: [
       {
-        title: "Perfect Challah Recipe",
-        url: "https://www.youtube.com/watch?v=dU7h2GpSgaQ",
-        channel: "Ethan Chlebowski",
+        title: "How to Make The Best Braided Bread: Challah",
+        url: "https://www.youtube.com/watch?v=KsQdgxs-bC4",
+        channel: "Joshua Weissman",
       },
       {
-        title: "6-Strand Challah Braid",
-        url: "https://www.youtube.com/watch?v=X0LxNX5jDn8",
-        channel: "Joshua Weissman",
+        title: "Claire Saffitz Makes Perfect Challah and Babka",
+        url: "https://www.youtube.com/watch?v=1FcR1PDzC94",
+        channel: "NYT Cooking",
       },
     ],
   },
