@@ -30,9 +30,8 @@ export default async function BakeriesPage() {
       {},
       { next: { revalidate: 60 } }
     )
-    if (sanity.length > 0) {
-      bakeries = sanity.map(sanityToBakery)
-    }
+    // Merge: hardcoded first, then Sanity additions
+    bakeries = [...BAKERIES, ...sanity.map(sanityToBakery)]
   } catch {
     // Sanity unavailable — fall back to hardcoded data
   }
