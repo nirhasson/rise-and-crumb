@@ -93,20 +93,7 @@ export const BAKERIES: Bakery[] = [
     mapsUrl: "https://www.google.com/maps/place/Breada/@32.8176167,35.0025826,17z/data=!3m1!4b1!4m6!3m5!1s0x151dba3651e771cb:0x24c92ca20af3e347!8m2!3d32.8176167!4d35.0025826!16s%2Fg%2F11fxqq30xv",
     tags: ["מחמצת", "חיפה", "ארטיזן"],
   },
-  {
-    id: "bread-story",
-    name: "Bread Story",
-    region: "center",
-    city: "תל אביב",
-    address: "שוק הכרמל, תל אביב",
-    lat: 32.0638,
-    lng: 34.7723,
-    description: "לחמנייה קטנה ואהובה בשוק הכרמל. לחמי שאור יומיים, מאפים עונתיים ואווירת שוק אמיתית. מומלץ להגיע בבוקר.",
-    specialties: ["לחם שאור", "לחם זיתים", "מאפים מלוחים"],
-    hours: "שני–שישי 7:00–14:00",
-    image: "https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=600&q=80",
-    tags: ["שאור", "שוק", "בוקר"],
-  },
+
   {
     id: "lasha-mitzpe-ramon",
     name: "לשה",
