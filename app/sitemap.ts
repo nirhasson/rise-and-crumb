@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
-import { client } from '@/lib/sanity' // וודא שהנתיב ל-client שלך נכון
+import { client } from '@/lib/sanity'
+import { BREAD_RECIPES } from '@/lib/bread-types'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.riseandcrumb.com'
@@ -14,22 +15,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/blog/local-sourdough-science`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
   ]
 
-  const query = `*[_type == "article"]{ "slug": slug.current, _updatedAt }`
+  // Hardcoded recipe pages
+  const recipePages: MetadataRoute.Sitemap = Object.values(BREAD_RECIPES).map(r => ({
+    url: `${baseUrl}/recipes/${r.slug}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }))
 
-  let dynamicPages: MetadataRoute.Sitemap = []
-
+  // Sanity articles
+  let articlePages: MetadataRoute.Sitemap = []
   try {
-    const posts = await client.fetch(query)
-
-    dynamicPages = posts.map((post: any) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: new Date(post._updatedAt),
+    const articles = await client.fetch(`*[_type == "article"]{ "slug": slug.current, _updatedAt }`)
+    articlePages = articles.map((a: { slug: string; _updatedAt: string }) => ({
+      url: `${baseUrl}/blog/${a.slug}`,
+      lastModified: new Date(a._updatedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     }))
-  } catch (error) {
-    console.error('Error fetching posts for sitemap:', error)
-  }
+  } catch {}
 
-  return [...staticPages, ...dynamicPages]
+  // Sanity recipes
+  let sanityRecipePages: MetadataRoute.Sitemap = []
+  try {
+    const recipes = await client.fetch(`*[_type == "recipe"]{ "slug": slug.current, _updatedAt }`)
+    sanityRecipePages = recipes.map((r: { slug: string; _updatedAt: string }) => ({
+      url: `${baseUrl}/recipes/${r.slug}`,
+      lastModified: new Date(r._updatedAt),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    }))
+  } catch {}
+
+  return [...staticPages, ...recipePages, ...articlePages, ...sanityRecipePages]
 }

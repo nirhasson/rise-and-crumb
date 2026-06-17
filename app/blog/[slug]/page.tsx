@@ -168,14 +168,53 @@ import type { Metadata } from 'next'
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   if (slug === "local-flour-guide" || slug === "local-1") {
-    return { title: "מדריך הקמחים ללחם | מגזין | Rise & Crumb", description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח" }
+    return {
+      title: "מדריך הקמחים ללחם | מגזין | Rise & Crumb",
+      description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח",
+      openGraph: {
+        title: "מדריך הקמחים ללחם | Rise & Crumb",
+        description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח",
+        url: "https://www.riseandcrumb.com/blog/local-flour-guide",
+        images: [{ url: "https://www.riseandcrumb.com/images/blog/wheat-grain.jpg" }],
+        type: "article",
+        locale: "he_IL",
+        siteName: "Rise & Crumb",
+      },
+    }
   }
   if (slug === "local-sourdough-science") {
-    return { title: "המדע מאחורי המחמצת | מגזין | Rise & Crumb", description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב" }
+    return {
+      title: "המדע מאחורי המחמצת | מגזין | Rise & Crumb",
+      description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב",
+      openGraph: {
+        title: "המדע מאחורי המחמצת | Rise & Crumb",
+        description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב",
+        url: "https://www.riseandcrumb.com/blog/local-sourdough-science",
+        images: [{ url: "https://www.riseandcrumb.com/images/blog/sour dough starter.jpg" }],
+        type: "article",
+        locale: "he_IL",
+        siteName: "Rise & Crumb",
+      },
+    }
   }
-  const article = await client.fetch(`*[_type == "article" && (slug.current == $slug || _id == $slug)][0]{title, excerpt}`, { slug });
+  const article = await client.fetch(
+    `*[_type == "article" && (slug.current == $slug || _id == $slug)][0]{title, excerpt, "imageUrl": mainImage.asset->url}`,
+    { slug }
+  )
   if (!article) return { title: "כתבה לא נמצאה" }
-  return { title: `${article.title} | מגזין | Rise & Crumb`, description: article.excerpt }
+  return {
+    title: `${article.title} | מגזין | Rise & Crumb`,
+    description: article.excerpt,
+    openGraph: {
+      title: `${article.title} | מגזין | Rise & Crumb`,
+      description: article.excerpt,
+      url: `https://www.riseandcrumb.com/blog/${slug}`,
+      images: article.imageUrl ? [{ url: article.imageUrl }] : [],
+      type: 'article',
+      locale: 'he_IL',
+      siteName: 'Rise & Crumb',
+    },
+  }
 }
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {

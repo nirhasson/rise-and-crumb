@@ -1,6 +1,20 @@
+import type { Metadata } from 'next'
 import { client, bakeriesQuery, type SanityBakery } from "@/lib/sanity"
 import { BAKERIES, type Bakery } from "@/lib/bakery-data"
 import { BakeriesClient } from "@/components/bread/bakeries-client"
+
+export const metadata: Metadata = {
+  title: 'מאפיות ארטיזנליות בישראל | Rise & Crumb',
+  description: 'מדריך המאפיות הארטיזנליות של ישראל — לחם מחמצת, באגטים, מאפים. מפה אינטראקטיבית עם פרטים, שעות ותגיות.',
+  openGraph: {
+    title: 'מאפיות ארטיזנליות בישראל | Rise & Crumb',
+    description: 'מדריך המאפיות הארטיזנליות של ישראל — לחם מחמצת, באגטים, מאפים.',
+    url: 'https://www.riseandcrumb.com/bakeries',
+    type: 'website',
+    locale: 'he_IL',
+    siteName: 'Rise & Crumb',
+  },
+}
 
 function sanityToBakery(b: SanityBakery): Bakery {
   return {
