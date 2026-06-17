@@ -22,7 +22,20 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(find \"/Users/nirhasson/Documents/GitHub\" -name \"*.ts\" -path \"*/sliceafterslice*\" -o -name \"*.tsx\" -path \"*/sliceafterslice*\" 2>/dev/null | head -30)",
-      "Read(//Users/nirhasson/Documents/GitHub/**)"
+      "Read(//Users/nirhasson/Documents/GitHub/**)",
+      "Bash(convert --version)",
+      "Bash(ffmpeg -version)",
+      "Bash(python3 -c \"from PIL import Image, ImageDraw, ImageFont; print\\('PIL ok'\\)\")",
+      "Bash(python3 -c \"import PIL; print\\(PIL.__version__\\)\")",
+      "Bash(ls -t \"/Users/nirhasson/Downloads/\" | head -10)",
+      "Read(//Users/nirhasson/Downloads/**)",
+      "Bash(python3)",
+      "Read(//System/Library/Fonts/**)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(find /System/Library/Fonts /Library/Fonts ~/Library/Fonts -name \"Arial Unicode.ttf\" 2>/dev/null | head -3 *)",
+      "Read(//Library/Fonts/**)",
+      "Bash(python3 -c \"from bidi.algorithm import get_display; print\\('bidi ok'\\)\")",
+      "Bash(pip3 install *)"
     ]
   }
 }
