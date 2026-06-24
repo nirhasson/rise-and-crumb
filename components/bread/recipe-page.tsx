@@ -107,23 +107,41 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
         </div>
       </div>
 
-      {/* Flour mix */}
-      {recipe.flourMix && recipe.flourMix.length > 0 && (
+      {/* Flour mix + additionals */}
+      {((recipe.flourMix && recipe.flourMix.length > 0) || (recipe.additionals && recipe.additionals.length > 0)) && (
         <Card>
           <CardHeader>
             <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>
-              תערובת קמחים
+              מרכיבים
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {recipe.flourMix.map((f, i) => (
-                <div key={i} className="flex justify-between items-center text-sm">
-                  <span>{f.name}</span>
-                  <span className="font-mono font-bold">{f.percentage}%</span>
+          <CardContent className="space-y-3">
+            {recipe.flourMix && recipe.flourMix.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">קמחים</p>
+                <div className="space-y-2">
+                  {recipe.flourMix.map((f, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm">
+                      <span>{f.name}</span>
+                      <span className="font-mono font-bold">{f.percentage}%</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+            {recipe.additionals && recipe.additionals.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">תוספות</p>
+                <div className="space-y-2">
+                  {recipe.additionals.map((a, i) => (
+                    <div key={i} className="flex justify-between items-center text-sm">
+                      <span>{a.name}</span>
+                      <span className="font-mono font-bold">{a.percentage}%</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -168,7 +186,12 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
             <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>אפייה</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm">
-            {recipe.baking.temperature && <p><span className="font-semibold">טמפרטורה: </span>{recipe.baking.temperature}</p>}
+            {(recipe.baking.temperature || recipe.baking.temperatureCelsius) && (
+              <p>
+                <span className="font-semibold">טמפרטורה: </span>
+                {recipe.baking.temperature ?? `${recipe.baking.temperatureCelsius}°C`}
+              </p>
+            )}
             {recipe.baking.ovenType && <p><span className="font-semibold">תנור: </span>{recipe.baking.ovenType}</p>}
             {recipe.baking.bakingTime && <p><span className="font-semibold">זמן: </span>{recipe.baking.bakingTime}</p>}
             {recipe.baking.steamTip && <p className="text-muted-foreground">{recipe.baking.steamTip}</p>}
