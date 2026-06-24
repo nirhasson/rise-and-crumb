@@ -60,70 +60,94 @@ export function RecipePage({ slug, initialSanityRecipe }: RecipePageProps) {
   return <SanityRecipeView recipe={initialSanityRecipe} />
 }
 
-/* ─── Simple recipe view for Sanity recipes ─── */
+/* ─── Sanity recipe view — matches RecipeView styling exactly ─── */
 function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="border-2 border-border overflow-hidden">
-        {recipe.image && (
-          <div className="relative w-full h-64">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={recipe.image} alt={recipe.name} className="w-full h-full object-cover" />
-          </div>
+    <div className="space-y-6">
+      {/* Hero */}
+      <div className="relative h-72 w-full overflow-hidden border-2 border-border">
+        {recipe.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={recipe.image} alt={recipe.name} className="w-full h-full object-cover" />
+        ) : (
+          <div className="w-full h-full bg-muted" />
         )}
-        <div className="p-6">
-          <h2
-            className="text-4xl font-black text-foreground mb-3"
-            style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+        <Button
+          variant="ghost"
+          size="sm"
+          asChild
+          className="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white border border-white/20"
+        >
+          <Link href="/">
+            <ArrowRight className="h-4 w-4 ml-2" />
+            חזרה
+          </Link>
+        </Button>
+
+        <div className="absolute bottom-0 right-0 left-0 p-6">
+          <h1
+            className="text-4xl md:text-5xl font-black font-display text-white leading-none mb-2"
+            style={{ letterSpacing: "-0.03em" }}
           >
             {recipe.name.toUpperCase()}
-          </h2>
-          {recipe.description && (
-            <p className="text-sm text-muted-foreground leading-relaxed">{recipe.description}</p>
-          )}
-          <div className="flex flex-wrap gap-3 mt-4">
+          </h1>
+          <div className="flex items-center gap-3 flex-wrap">
             {recipe.difficulty && (
-              <span className="border border-border px-3 py-1 text-xs font-bold uppercase tracking-wide">
+              <span className="text-white/80 text-xs font-bold uppercase border border-white/40 px-2 py-0.5">
                 {recipe.difficulty}
               </span>
             )}
             {recipe.totalTime && (
-              <span className="border border-border px-3 py-1 text-xs font-mono">
-                ⏱ {recipe.totalTime}
+              <span className="text-white/70 text-xs font-mono flex items-center gap-1">
+                <Clock className="h-3 w-3" /> {recipe.totalTime}
               </span>
             )}
             {recipe.hydration && (
-              <span className="border border-border px-3 py-1 text-xs font-mono">
-                💧 {recipe.hydrationDisplay ?? `${recipe.hydration}%`}
+              <span className="text-white/70 text-xs font-mono flex items-center gap-1">
+                <Droplets className="h-3 w-3" /> {recipe.hydrationDisplay ?? `${recipe.hydration}%`} הידרציה
               </span>
             )}
             {recipe.levainType && (
-              <span className="border border-border px-3 py-1 text-xs font-mono">
-                {recipe.levainType === "sourdough" ? "🌾 מחמצת" : "🧫 שמרים"}
+              <span className="text-white/70 text-xs font-mono uppercase">
+                {recipe.levainType === "sourdough" ? "מחמצת" : "שמרים"}
               </span>
             )}
           </div>
         </div>
       </div>
 
+      {/* Description */}
+      {recipe.description && (
+        <p className="text-sm text-muted-foreground leading-relaxed px-1">{recipe.description}</p>
+      )}
+
       {/* Flour mix + additionals */}
       {((recipe.flourMix && recipe.flourMix.length > 0) || (recipe.additionals && recipe.additionals.length > 0)) && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>
+        <Card className="border-border/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2 text-base font-display font-black" style={{ letterSpacing: "-0.02em" }}>
+              <Wheat className="h-4 w-4 text-primary" />
               מרכיבים
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {recipe.flourMix && recipe.flourMix.length > 0 && (
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">קמחים</p>
+                {recipe.additionals && recipe.additionals.length > 0 && (
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">קמחים</p>
+                )}
                 <div className="space-y-2">
                   {recipe.flourMix.map((f, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm">
+                    <div key={i} className="flex items-center justify-between text-sm">
                       <span>{f.name}</span>
-                      <span className="font-mono font-bold">{f.percentage}%</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-24 h-1.5 bg-muted overflow-hidden">
+                          <div className="h-full bg-primary transition-all duration-700" style={{ width: `${f.percentage}%` }} />
+                        </div>
+                        <span className="font-bold font-mono w-10 text-right">{f.percentage}%</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -134,9 +158,9 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">תוספות</p>
                 <div className="space-y-2">
                   {recipe.additionals.map((a, i) => (
-                    <div key={i} className="flex justify-between items-center text-sm">
+                    <div key={i} className="flex items-center justify-between text-sm">
                       <span>{a.name}</span>
-                      <span className="font-mono font-bold">{a.percentage}%</span>
+                      <span className="font-bold font-mono">{a.percentage}%</span>
                     </div>
                   ))}
                 </div>
@@ -148,98 +172,78 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
 
       {/* Fermentation */}
       {recipe.fermentation && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>
-              תסיסה
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            {recipe.fermentation.bulk && <p><span className="font-semibold">Bulk: </span>{recipe.fermentation.bulk}</p>}
-            {recipe.fermentation.proof && <p><span className="font-semibold">התפחה: </span>{recipe.fermentation.proof}</p>}
-            {recipe.fermentation.tips?.map((tip, i) => (
-              <p key={i} className="text-muted-foreground flex gap-2"><span className="text-primary shrink-0">→</span>{tip}</p>
-            ))}
-          </CardContent>
-        </Card>
+        <div className="border-2 border-border">
+          <div className="flex items-center gap-2 p-4 border-b-2 border-border">
+            <Timer className="h-4 w-4 text-primary" />
+            <span className="text-base font-display font-black" style={{ letterSpacing: "-0.02em" }}>תסיסה</span>
+          </div>
+          <div className="p-4 space-y-3">
+            {recipe.fermentation.bulk && <InfoRow label="תסיסה ראשונה (Bulk)" value={recipe.fermentation.bulk} />}
+            {recipe.fermentation.proof && <InfoRow label="התפחה סופית" value={recipe.fermentation.proof} />}
+            {recipe.fermentation.tips && recipe.fermentation.tips.length > 0 && (
+              <TipsList tips={recipe.fermentation.tips} />
+            )}
+          </div>
+        </div>
       )}
 
       {/* Shaping */}
-      {recipe.shaping?.technique && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>עיצוב</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <p>{recipe.shaping.technique}</p>
-            {recipe.shaping.tips?.map((tip, i) => (
-              <p key={i} className="text-muted-foreground flex gap-2"><span className="text-primary shrink-0">→</span>{tip}</p>
-            ))}
-          </CardContent>
-        </Card>
+      {(recipe.shaping?.technique || (recipe.shaping?.tips && recipe.shaping.tips.length > 0)) && (
+        <SectionCard icon={Hand} title="עיצוב">
+          {recipe.shaping?.technique && <p className="text-sm">{recipe.shaping.technique}</p>}
+          {recipe.shaping?.tips && recipe.shaping.tips.length > 0 && (
+            <TipsList tips={recipe.shaping.tips} />
+          )}
+        </SectionCard>
       )}
 
       {/* Baking */}
       {recipe.baking && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>אפייה</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            {(recipe.baking.temperature || recipe.baking.temperatureCelsius) && (
-              <p>
-                <span className="font-semibold">טמפרטורה: </span>
-                {recipe.baking.temperature ?? `${recipe.baking.temperatureCelsius}°C`}
-              </p>
-            )}
-            {recipe.baking.ovenType && <p><span className="font-semibold">תנור: </span>{recipe.baking.ovenType}</p>}
-            {recipe.baking.bakingTime && <p><span className="font-semibold">זמן: </span>{recipe.baking.bakingTime}</p>}
-            {recipe.baking.steamTip && <p className="text-muted-foreground">{recipe.baking.steamTip}</p>}
-          </CardContent>
-        </Card>
+        <SectionCard icon={Flame} title="אפייה">
+          {(recipe.baking.temperature || recipe.baking.temperatureCelsius) && (
+            <InfoRow label="טמפרטורה" value={recipe.baking.temperature ?? `${recipe.baking.temperatureCelsius}°C`} />
+          )}
+          {recipe.baking.bakingTime && <InfoRow label="זמן אפייה" value={recipe.baking.bakingTime} />}
+          {recipe.baking.ovenType && <InfoRow label="סוג תנור" value={recipe.baking.ovenType} />}
+          {recipe.baking.steam && (
+            <div className="p-3 bg-muted border border-border text-sm flex items-start gap-2 mt-2">
+              <Wind className="h-4 w-4 text-primary shrink-0 mt-0.5" />
+              <span>{recipe.baking.steamTip || "נדרשים אדים לאפייה נכונה"}</span>
+            </div>
+          )}
+          {recipe.tips && recipe.tips.length > 0 && <TipsList tips={recipe.tips} />}
+        </SectionCard>
       )}
 
-      {/* Tips */}
-      {recipe.tips && recipe.tips.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>טיפים</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {recipe.tips.map((tip, i) => (
-                <li key={i} className="text-sm flex gap-2 text-muted-foreground">
-                  <span className="text-primary shrink-0">→</span>{tip}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      {/* General tips (when no baking section) */}
+      {recipe.tips && recipe.tips.length > 0 && !recipe.baking && (
+        <SectionCard icon={Hash} title="טיפים">
+          <TipsList tips={recipe.tips} />
+        </SectionCard>
       )}
 
       {/* YouTube */}
       {recipe.youtubeLinks && recipe.youtubeLinks.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base font-black" style={{ letterSpacing: "-0.02em" }}>סרטונים</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {recipe.youtubeLinks.map((v, i) => (
-              <a key={i} href={v.url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 border-2 border-border hover:border-primary transition-colors text-sm">
-                <span className="font-medium">{v.title}</span>
-                <span className="text-xs text-muted-foreground">{v.channel}</span>
+        <SectionCard icon={Youtube} title="למד עוד">
+          <div className="space-y-2">
+            {recipe.youtubeLinks.map((link, i) => (
+              <a
+                key={i}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 bg-muted/50 hover:bg-muted transition-colors group"
+              >
+                <div>
+                  <p className="font-medium text-sm group-hover:text-primary transition-colors">{link.title}</p>
+                  <p className="text-xs text-muted-foreground">{link.channel}</p>
+                </div>
+                <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
               </a>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </SectionCard>
       )}
-
-      <div className="pt-4">
-        <Button asChild variant="outline">
-          <Link href="/">← חזרה למתכונים</Link>
-        </Button>
-      </div>
     </div>
   )
 }
