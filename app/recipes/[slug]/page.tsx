@@ -9,7 +9,8 @@ export default async function RecipeSlugPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
+  const slug = decodeURIComponent(rawSlug)
 
   let sanityRecipe: SanityRecipe | null = null
 

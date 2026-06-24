@@ -7,7 +7,8 @@ const baseUrl = 'https://www.riseandcrumb.com'
 export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> }
 ): Promise<Metadata> {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
+  const slug = decodeURIComponent(rawSlug)
 
   const hardcoded = Object.values(BREAD_RECIPES).find(r => r.slug === slug)
   if (hardcoded) {
