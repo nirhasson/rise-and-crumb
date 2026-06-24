@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { client, recipeBySlugQuery, type SanityRecipe } from "@/lib/sanity"
+import type { SanityRecipe } from "@/lib/sanity"
 import {
   ArrowRight,
   Wheat,
@@ -36,37 +36,17 @@ import {
 
 interface RecipePageProps {
   slug: string
+  initialSanityRecipe?: SanityRecipe | null
 }
 
-export function RecipePage({ slug }: RecipePageProps) {
-  const [sanityRecipe, setSanityRecipe] = useState<SanityRecipe | null>(null)
-  const [loading, setLoading] = useState(false)
-
+export function RecipePage({ slug, initialSanityRecipe }: RecipePageProps) {
   const type = (Object.keys(BREAD_RECIPES) as BreadType[]).find(
     (k) => BREAD_RECIPES[k].slug === slug
   )
 
-  useEffect(() => {
-    if (!type) {
-      setLoading(true)
-      client.fetch(recipeBySlugQuery, { slug })
-        .then((r: SanityRecipe | null) => setSanityRecipe(r ?? null))
-        .catch(() => setSanityRecipe(null))
-        .finally(() => setLoading(false))
-    }
-  }, [slug, type])
-
   if (type) return <RecipeView type={type} />
 
-  if (loading) {
-    return (
-      <div className="text-center py-20">
-        <p className="text-muted-foreground font-mono text-xs uppercase tracking-widest">טוען מתכון...</p>
-      </div>
-    )
-  }
-
-  if (!sanityRecipe) {
+  if (!initialSanityRecipe) {
     return (
       <div className="text-center py-20">
         <p className="text-muted-foreground">מתכון לא נמצא</p>
@@ -77,7 +57,7 @@ export function RecipePage({ slug }: RecipePageProps) {
     )
   }
 
-  return <SanityRecipeView recipe={sanityRecipe} />
+  return <SanityRecipeView recipe={initialSanityRecipe} />
 }
 
 /* ─── Simple recipe view for Sanity recipes ─── */

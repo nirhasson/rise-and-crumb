@@ -1,14 +1,31 @@
-"use client"
-
 import Link from "next/link"
 import { Navigation } from "@/components/bread/navigation"
 import { RecipePage } from "@/components/bread/recipe-page"
-import { useLanguage } from "@/lib/language-context"
-import { use } from "react"
+import { client, recipeBySlugQuery, type SanityRecipe } from "@/lib/sanity"
+import { BREAD_RECIPES } from "@/lib/bread-types"
 
-export default function RecipeSlugPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
-  const { t } = useLanguage()
+export default async function RecipeSlugPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+
+  let sanityRecipe: SanityRecipe | null = null
+
+  const isHardcoded = Object.values(BREAD_RECIPES).some(r => r.slug === slug)
+
+  if (!isHardcoded) {
+    try {
+      sanityRecipe = await client.fetch(
+        recipeBySlugQuery,
+        { slug },
+        { next: { revalidate: 60 } }
+      )
+    } catch {
+      // fall through to "not found"
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -21,9 +38,7 @@ export default function RecipeSlugPage({ params }: { params: Promise<{ slug: str
               className="text-5xl md:text-6xl font-black text-primary tracking-tighter leading-none hover:text-foreground transition-colors duration-200"
               style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
             >
-              {t("siteName").split(" ").map((word, i) => (
-                <span key={i}>{word} </span>
-              ))}
+              Rise &amp; Crumb
             </h1>
           </Link>
         </header>
@@ -31,13 +46,13 @@ export default function RecipeSlugPage({ params }: { params: Promise<{ slug: str
         <Navigation />
 
         <main className="mt-8">
-          <RecipePage slug={slug} />
+          <RecipePage slug={slug} initialSanityRecipe={sanityRecipe} />
         </main>
 
         <footer className="mt-12 pt-8 border-t-2 border-primary/20">
           <div className="flex justify-between items-center text-xs font-mono">
-            <span>{t("siteName").toUpperCase()}</span>
-            <span>{t("footer")}</span>
+            <span>RISE &amp; CRUMB</span>
+            <span>EST. 2026</span>
           </div>
         </footer>
       </div>
