@@ -133,11 +133,10 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Flour mix */}
             {recipe.flourMix && recipe.flourMix.length > 0 && (
               <div>
-                {recipe.additionals && recipe.additionals.length > 0 && (
-                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">קמחים</p>
-                )}
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">קמחים</p>
                 <div className="space-y-2">
                   {recipe.flourMix.map((f, i) => (
                     <div key={i} className="flex items-center justify-between text-sm">
@@ -153,6 +152,41 @@ function SanityRecipeView({ recipe }: { recipe: SanityRecipe }) {
                 </div>
               </div>
             )}
+
+            {/* Water, salt, starter/yeast */}
+            {(recipe.hydration || recipe.salt || recipe.starterPercentage || recipe.yeastPercentage) && (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">פרמטרים</p>
+                <div className="space-y-2">
+                  {recipe.hydration && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span>מים</span>
+                      <span className="font-bold font-mono">{recipe.hydrationDisplay ?? `${recipe.hydration}%`}</span>
+                    </div>
+                  )}
+                  {recipe.salt && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span>מלח</span>
+                      <span className="font-bold font-mono">{recipe.salt}%</span>
+                    </div>
+                  )}
+                  {recipe.starterPercentage && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span>מחמצת</span>
+                      <span className="font-bold font-mono">{recipe.starterPercentage}%</span>
+                    </div>
+                  )}
+                  {recipe.yeastPercentage && (
+                    <div className="flex items-center justify-between text-sm">
+                      <span>שמרים</span>
+                      <span className="font-bold font-mono">{recipe.yeastPercentage}%</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Additionals */}
             {recipe.additionals && recipe.additionals.length > 0 && (
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">תוספות</p>
