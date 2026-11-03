@@ -144,20 +144,21 @@ export default function StarterGuidePage() {
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-border" />
           <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-border" />
           <Link href="/">
-            <h1
+            <div
               className="text-5xl md:text-6xl font-black text-primary tracking-tighter leading-none hover:text-foreground transition-colors duration-200"
               style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
             >
               {t("siteName").split(" ").map((word, i) => (
                 <span key={i}>{word} </span>
               ))}
-            </h1>
+            </div>
           </Link>
         </header>
 
         <Navigation />
 
         <main className="mt-8 space-y-8">
+          <h1 className="sr-only">המדריך המלא להכנת מחמצת מאפס</h1>
           {/* Intro */}
           <div className="border-2 border-primary bg-primary/5 p-6">
             <div className="flex items-start gap-4">

@@ -30,6 +30,7 @@ export function BakeriesClient({ bakeries }: BakeriesClientProps) {
     center: bakeries.filter(b => b.region === "center").length,
     south: bakeries.filter(b => b.region === "south").length,
   }
+  const visible = region === "all" ? bakeries : bakeries.filter(b => b.region === region)
 
   return (
     <div className="min-h-screen bg-background flex flex-col" style={{ direction: "rtl" }}>
@@ -38,12 +39,12 @@ export function BakeriesClient({ bakeries }: BakeriesClientProps) {
         <div className="absolute top-10 right-6 w-8 h-8 border-t-2 border-r-2 border-border" />
         <div className="absolute top-10 left-6 w-8 h-8 border-t-2 border-l-2 border-border" />
         <Link href="/">
-          <h1
+          <div
             className="text-5xl md:text-6xl font-black text-primary tracking-tighter leading-none text-center hover:text-foreground transition-colors duration-200"
             style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
           >
             Rise &amp; Crumb
-          </h1>
+          </div>
         </Link>
       </header>
 
@@ -60,12 +61,12 @@ export function BakeriesClient({ bakeries }: BakeriesClientProps) {
                 מדריך מאפיות ארטיזנליות
               </span>
             </div>
-            <h2
+            <h1
               className="text-3xl md:text-4xl font-black font-display text-foreground leading-none"
               style={{ letterSpacing: "-0.03em" }}
             >
               מאפיות השוות ביקור
-            </h2>
+            </h1>
           </div>
           <p className="text-xs text-muted-foreground font-mono hidden md:block">
             {counts[region]} מאפיות
@@ -105,6 +106,50 @@ export function BakeriesClient({ bakeries }: BakeriesClientProps) {
       >
         <BakeryMap bakeries={bakeries} regionFilter={region} />
       </div>
+
+      {/* Text list of the bakeries — rendered on the server so search engines can read it */}
+      <section className="max-w-4xl w-full mx-auto px-6 pb-8">
+        <h2
+          className="text-2xl font-black font-display text-foreground mb-4"
+          style={{ letterSpacing: "-0.03em" }}
+        >
+          {region === "all" ? "כל המאפיות" : `מאפיות ב${REGION_LABELS[region]}`}
+        </h2>
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {visible.map(b => (
+            <li key={b.id} className="border-2 border-border p-4 flex flex-col gap-2">
+              <h3 className="text-lg font-black leading-tight">{b.name}</h3>
+              <p className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
+                <MapPin className="h-3 w-3 shrink-0" />
+                {b.address || b.city}
+              </p>
+              {b.description && <p className="text-sm leading-relaxed">{b.description}</p>}
+              {b.specialties.length > 0 && (
+                <p className="text-xs text-muted-foreground">
+                  <span className="font-bold text-foreground">התמחויות: </span>
+                  {b.specialties.join(" · ")}
+                </p>
+              )}
+              {b.hours && <p className="text-xs font-mono text-muted-foreground">{b.hours}</p>}
+              <div className="flex gap-4 text-xs font-bold mt-auto pt-1">
+                <a
+                  href={b.mapsUrl ?? `https://www.google.com/maps?q=${b.lat},${b.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-4 hover:text-primary"
+                >
+                  ניווט
+                </a>
+                {b.instagram && (
+                  <a href={b.instagram} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-primary">
+                    Instagram
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <footer className="max-w-4xl w-full mx-auto px-6 pb-6">
         <div className="flex justify-between items-center text-xs font-mono text-muted-foreground border-t-2 border-border pt-4">

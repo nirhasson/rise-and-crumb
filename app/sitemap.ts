@@ -17,7 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Hardcoded recipe pages
   const recipePages: MetadataRoute.Sitemap = Object.values(BREAD_RECIPES).map(r => ({
-    url: `${baseUrl}/recipes/${r.slug}`,
+    url: `${baseUrl}/recipes/${encodeURIComponent(r.slug)}`,
     lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const articles = await client.fetch(`*[_type == "article"]{ "slug": slug.current, _updatedAt }`)
     articlePages = articles.map((a: { slug: string; _updatedAt: string }) => ({
-      url: `${baseUrl}/blog/${a.slug}`,
+      url: `${baseUrl}/blog/${encodeURIComponent(a.slug)}`,
       lastModified: new Date(a._updatedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const recipes = await client.fetch(`*[_type == "recipe"]{ "slug": slug.current, _updatedAt }`)
     sanityRecipePages = recipes.map((r: { slug: string; _updatedAt: string }) => ({
-      url: `${baseUrl}/recipes/${r.slug}`,
+      url: `${baseUrl}/recipes/${encodeURIComponent(r.slug)}`,
       lastModified: new Date(r._updatedAt),
       changeFrequency: 'monthly' as const,
       priority: 0.8,

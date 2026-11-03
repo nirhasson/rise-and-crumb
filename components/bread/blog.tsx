@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { client, articlesQuery } from "@/lib/sanity"
+import { client } from "@/lib/sanity"
 import Image from "next/image"
 import { Calendar, Clock, User, Search, ChevronLeft } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -100,28 +100,12 @@ const blogPosts = [
   },
 ]
 
-export function Blog() {
+// Posts come from the server so the full list is in the HTML search engines see
+export function Blog({ posts = [] }: { posts?: any[] }) {
   const [searchQuery, setSearchQuery] = useState("")
 
-  const [sanityPosts, setSanityPosts] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const data = await client.fetch(articlesQuery)
-        setSanityPosts(data)
-      } catch (error) {
-        console.error("Failed to fetch from Sanity:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPosts()
-  }, [])
-
-  // 💡 איחוד רשימות: סניטי קודם, אחר כך המקומיות
-  const allPosts = [...sanityPosts, ...blogPosts]
+  // Sanity first, then local posts
+  const allPosts = [...posts, ...blogPosts]
 
   const filteredPosts = allPosts.filter((post) => {
     const query = searchQuery.toLowerCase()

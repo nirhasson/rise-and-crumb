@@ -21,7 +21,6 @@ const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: '--font-mon
 export const metadata: Metadata = {
   title: 'Rise & Crumb - מגזין האפייה של ישראל - מתכוני לחם, מחמצת ואפייה',
   description: "מתכונים ללחמי מחמצת, באגטים, פוקצ'ות וחלות. מדריך מחמצת מלא, מחשבון כמויות ומגזין אפייה.",
-  generator: 'v0.app',
   metadataBase: new URL('https://www.riseandcrumb.com'),
   verification: {
     google: 'hnm6OnVLzbNEJPn4JBgJAWlTrSlcgRaQzZlmCFEVYoA',

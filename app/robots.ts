@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/private/', // דפים שאתה לא רוצה שיסרקו
+      disallow: ['/studio', '/api/'],
     },
     sitemap: 'https://www.riseandcrumb.com/sitemap.xml',
   }

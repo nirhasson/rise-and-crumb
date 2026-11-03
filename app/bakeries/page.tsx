@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     locale: 'he_IL',
     siteName: 'Rise & Crumb',
   },
+  alternates: { canonical: 'https://www.riseandcrumb.com/bakeries' },
 }
 
 function sanityToBakery(b: SanityBakery): Bakery {
@@ -50,5 +51,34 @@ export default async function BakeriesPage() {
     // Sanity unavailable — fall back to hardcoded data
   }
 
-  return <BakeriesClient bakeries={bakeries} />
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "מאפיות ארטיזנליות בישראל",
+    itemListElement: bakeries.map((b, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Bakery",
+        name: b.name,
+        description: b.description || undefined,
+        image: b.image ? (b.image.startsWith("http") ? b.image : `https://www.riseandcrumb.com${b.image}`) : undefined,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: b.address || undefined,
+          addressLocality: b.city,
+          addressCountry: "IL",
+        },
+        geo: { "@type": "GeoCoordinates", latitude: b.lat, longitude: b.lng },
+        sameAs: [b.instagram, b.website].filter(Boolean),
+      },
+    })),
+  }
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <BakeriesClient bakeries={bakeries} />
+    </>
+  )
 }

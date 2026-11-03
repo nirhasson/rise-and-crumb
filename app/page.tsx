@@ -1,5 +1,10 @@
 import { client, recipesQuery, type SanityRecipe } from "@/lib/sanity"
+import type { Metadata } from "next"
 import { HomeClient } from "@/components/bread/home-client"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "https://www.riseandcrumb.com/" },
+}
 
 export default async function Page() {
   let sanityRecipes: SanityRecipe[] = []

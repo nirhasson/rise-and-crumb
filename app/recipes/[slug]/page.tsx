@@ -117,12 +117,12 @@ export default async function RecipeSlugPage({
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-border" />
           <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-border" />
           <Link href="/">
-            <h1
+            <div
               className="text-5xl md:text-6xl font-black text-primary tracking-tighter leading-none hover:text-foreground transition-colors duration-200"
               style={{ fontFamily: 'Impact, "Arial Black", sans-serif', letterSpacing: "-0.03em" }}
             >
               Rise &amp; Crumb
-            </h1>
+            </div>
           </Link>
         </header>
 

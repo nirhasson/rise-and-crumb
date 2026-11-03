@@ -171,6 +171,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
       title: "מדריך הקמחים ללחם | מגזין | Rise & Crumb",
       description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח",
+      alternates: { canonical: "https://www.riseandcrumb.com/blog/local-flour-guide" },
       openGraph: {
         title: "מדריך הקמחים ללחם | Rise & Crumb",
         description: "לבן, מלא, שיפון, כוסמין - כל מה שצריך לדעת לפני שבוחרים קמח",
@@ -186,11 +187,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
       title: "המדע מאחורי המחמצת | מגזין | Rise & Crumb",
       description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב",
+      alternates: { canonical: "https://www.riseandcrumb.com/blog/local-sourdough-science" },
       openGraph: {
         title: "המדע מאחורי המחמצת | Rise & Crumb",
         description: "מה בעצם קורה בצנצנת? חיידקים, שמרים, pH וטמפרטורה - המדע שמאחורי לחם מחמצת טוב",
         url: "https://www.riseandcrumb.com/blog/local-sourdough-science",
-        images: [{ url: "https://www.riseandcrumb.com/images/blog/sour dough starter.jpg" }],
+        images: [{ url: "https://www.riseandcrumb.com/images/blog/sour%20dough%20starter.jpg" }],
         type: "article",
         locale: "he_IL",
         siteName: "Rise & Crumb",
@@ -205,6 +207,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${article.title} | מגזין | Rise & Crumb`,
     description: article.excerpt,
+    alternates: { canonical: `https://www.riseandcrumb.com/blog/${slug}` },
     openGraph: {
       title: `${article.title} | מגזין | Rise & Crumb`,
       description: article.excerpt,
