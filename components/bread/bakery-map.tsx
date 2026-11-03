@@ -142,9 +142,11 @@ export function BakeryMap({ bakeries, regionFilter }: BakeryMapProps) {
 
         const map = L.map(container, { center: [31.7, 34.9], zoom: 8, zoomControl: false })
 
-        // Esri street tiles: free, no API key (CARTO now requires one)
-        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
-          attribution: "Tiles © Esri — Esri, HERE, Garmin, OpenStreetMap contributors",
+        // Leaflet's default prefix includes a flag icon; keep just the link
+        map.attributionControl.setPrefix('<a href="https://leafletjs.com">Leaflet</a>')
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
           maxZoom: 19,
         }).addTo(map)
 
