@@ -142,8 +142,9 @@ export function BakeryMap({ bakeries, regionFilter }: BakeryMapProps) {
 
         const map = L.map(container, { center: [31.7, 34.9], zoom: 8, zoomControl: false })
 
-        L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-          attribution: "© CARTO",
+        // Esri street tiles: free, no API key (CARTO now requires one)
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+          attribution: "Tiles © Esri — Esri, HERE, Garmin, OpenStreetMap contributors",
           maxZoom: 19,
         }).addTo(map)
 
